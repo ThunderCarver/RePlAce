@@ -1,7 +1,11 @@
+# specify minimal CMake version
 cmake_minimum_required(VERSION 3.1)
 
+# set project name
+# specify project name version
 project(RePlAce)
 
+# 指定C++标准
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -37,6 +41,7 @@ set(EIGEN_HOME
   ${PROJECT_SOURCE_DIR}/module/eigen-git-mirror 
 )
 
+# add subdirectory into CMAKE building system
 add_subdirectory(${DEFLIB_HOME})
 add_subdirectory(${LEFLIB_HOME})
 add_subdirectory(${FLUTE_HOME})
@@ -95,7 +100,7 @@ set (REPLACE_SRC
   src/wlen.cpp
   src/replace_external.cpp
   src/replace_private.cpp
-  src/replace_wrap.cpp
+  src/replace_wrap.cpp     #(这个文件原本没有，通过add_custom_command输出生成)
   )
 
 
