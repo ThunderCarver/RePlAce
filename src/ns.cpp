@@ -827,8 +827,10 @@ int myNesterov::DoNesterovOptimization(Timing::Timing &TimingInst) {
       UpdateBeta(it);
 
     // Elimination Condition
-    if(it->tot_hpwl > 2000000000)
+    if(it->tot_hpwl > 2000000000){
+      cout << "[Warning] wire length is too long, force to exit!"
       exit(0);
+    }
 
     if(isTiming) {
       int checkIter = INT_CONVERT(it->ovfl * 100);
