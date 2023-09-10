@@ -17,6 +17,8 @@ test/*.dat
 test/**/*.dat
 test/**/output
 test/**/exp
+test/
+build*/
 
 !*.gitignore
 
