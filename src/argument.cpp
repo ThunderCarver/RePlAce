@@ -52,7 +52,7 @@
 
 
 void initGlobalVars() {
-  bmFlagCMD = "etc";       // string
+  bmFlagCMD = "";       // string
   target_cell_den = PREC_MAX;
 
   gVerbose = 0;
