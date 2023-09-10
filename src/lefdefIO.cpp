@@ -349,6 +349,7 @@ void SetParameter() {
   }
 
   int siteSizeY = INT_CONVERT( GetDefDbu() * __ckt.lefSiteStor[sitePtr->second].sizeY() );
+  // int siteSizeX = INT_CONVERT( GetDefDbu() * __ckt.lefSiteStor[sitePtr->second].sizeY() );
 
   SetUnitY(1.0 * siteSizeY / 9.0f);
   SetUnitX(GetUnitY());
@@ -715,8 +716,10 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
   moduleCNT = 0;
 
   // not 1-to-1 mapping (into moduleInstnace), so traverse by index
+  // cout << "Component name : component type" << endl;
   for(size_t i = 0; i < __ckt.defComponentStor.size(); i++) {
     curComp = &(__ckt.defComponentStor[i]);
+    // cout << curComp->id() << " : " << curComp->name() << endl;
 
     curModule = &moduleInstance[moduleCNT];
     new(curModule) MODULE();
@@ -801,11 +804,10 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
     //        curModule->Dump(string("Macro ") + to_string(moduleCNT));
     moduleCNT++;
   }
-  //    cout << moduleCNT << endl;
+  cout << "After placed components ModuleCNT gets " << moduleCNT << " Size of moduleTermMap is " << moduleTermMap.size() << endl;
 
   // memory cutting
-//  moduleInstance =
-//      (MODULE*)realloc(moduleInstance, sizeof(MODULE) * moduleCNT);
+  moduleInstance =(MODULE*)realloc(moduleInstance, sizeof(MODULE) * moduleCNT);
 
   //
   // Terminal Update
@@ -819,6 +821,8 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
       blockageIdxStor.push_back(idx);
     }
   }
+  cout << "defBlockage info:" << __ckt.defBlockageStor.size() << endl;
+  cout << "blockageIdxStor info:" << blockageIdxStor.size() <<endl; 
 
   TERM* curTerm = NULL;
   terminalCNT = 0;
@@ -897,6 +901,8 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
 
     terminalCNT++;
   }
+  cout << "After fixed components moduleCNT gets "<< moduleCNT << " terminalCNT gets " << terminalCNT 
+       << " Size of moduleTermMap is " << moduleTermMap.size() << endl;
 
   // for pin
   for(auto& curPin : __ckt.defPinStor) {
@@ -921,6 +927,8 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
     //        curTerm->Dump();
     terminalCNT++;
   }
+  cout << "After defpin moduleCNT gets " << moduleCNT << " terminalCNT gets " << terminalCNT
+       << " size of moduleTermMap is " << moduleTermMap.size() << endl;
 
   int blockageCnt = 0;
   for(auto& curBlockIdx : blockageIdxStor) {
@@ -1171,6 +1179,7 @@ void GenerateDummyCell(Replace::Circuit& __ckt) {
 //    (TERM*) realloc( terminalInstance, sizeof(TERM) * terminalCNT);
  
   // copy into original instances 
+  terminalInstance = (TERM*)realloc(terminalInstance, sizeof(TERM) * terminalCNT);
   for(int i=prevCnt; i<terminalCNT; i++) {
     terminalInstance[i] = dummyTermStor_[i - prevCnt];
   }
@@ -1678,6 +1687,7 @@ void GenerateNetDefOnly(Replace::Circuit& __ckt) {
   for(auto& curNet : __ckt.defNetStor) {
     pinCNT += curNet.numConnections();
   }
+  cout << "[INFO] total nets number found in def file is " << __ckt.defNetStor.size() << endl;
 
   // memory reserve
   netInstance = (NET*)malloc(sizeof(NET) * netCNT);
@@ -1715,11 +1725,15 @@ void GenerateNetDefOnly(Replace::Circuit& __ckt) {
     if(net.hasUse() &&
        (strcmp(net.use(), "CLOCK") == 0 || strcmp(net.use(), "POWER") == 0 ||
         strcmp(net.use(), "GROUND") == 0 || strcmp(net.use(), "RESET") == 0)) {
+          cout << "** WARNING:  " << net.name() << " is detected. It's used for"
+          << net.use() << " so It'll be automatically excluded (defNetStor)" << endl;
       continue;
     }
 
     // skip for empty net definition.
     if( net.numConnections() == 0 ) {
+      cout << "** WARNING:  " << net.name() << " is detected. It has no connection. "
+           << " It'll be automatically excluded (defNetStor)" << endl;
       continue;
     }
    
@@ -1732,6 +1746,8 @@ void GenerateNetDefOnly(Replace::Circuit& __ckt) {
       }
     }
     if( isReset ) {
+      cout << "** WARNING:  " << net.name() << " is detected. It has SI or SE pin"
+           << " It'll be automatically excluded (defNetStor)" << endl;
       continue;
     }
 
@@ -1766,7 +1782,7 @@ void GenerateNetDefOnly(Replace::Circuit& __ckt) {
         auto mtPtr = moduleTermMap.find(string(net.pin(i)));
         if(mtPtr == moduleTermMap.end()) {
           cout << "** ERROR:  Net Instance ( " << net.pin(i)
-               << " ) does not exist in PINS statement (moduleTermMap) "
+               << " ) does not exist in DEF's PINS statement (moduleTermMap) "
                << endl;
           exit(1);
         }
@@ -1821,6 +1837,12 @@ void GenerateNetDefOnly(Replace::Circuit& __ckt) {
           cout << "** ERROR:  Net Instance ( " << instName
                << " ) does not exist in COMPONENTS/PINS statement "
                << "(moduleTermMap) " << endl;
+          cout << "the index of element in that net is " << i 
+               << " and pin name is " << pinName << endl;
+          cout << "size of moduleTermMap is " << moduleTermMap.size() << endl; 
+          cout << "module name is ( " << (*mtPtr).first << " ) " 
+               << "module is moduleInst or termInst (" << (*mtPtr).second.first << ")" 
+               << "corresponding index is (" << (*mtPtr).second.second << ")" << endl;
           exit(1);
         }
 
@@ -2063,7 +2085,7 @@ void Timing::WriteSpefClockNetVerilog(stringstream& feed) {
         string pinName = string(__ckt.defPinStor[connection.pinIdx].pinName());
         auto mtPtr = moduleTermMap.find(pinName);
         if(mtPtr == moduleTermMap.end()) {
-          cout << "** ERROR:  Net Instance ( " << pinName
+          cout << "** ERROR:  Net Instance pinName( " << pinName
                << " ) does not exist in COMPONENTS/PINS statement "
                << "(moduleTermMap) " << endl;
           exit(1);
@@ -2089,7 +2111,7 @@ void Timing::WriteSpefClockNetVerilog(stringstream& feed) {
             string(__ckt.defComponentStor[connection.compIdx].id()));
 
         if(mtPtr == moduleTermMap.end()) {
-          cout << "** ERROR:  Net Instance ( "
+          cout << "** ERROR:  Net Instance id( "
                << __ckt.defComponentStor[connection.compIdx].id()
                << " ) does not exist in COMPONENTS/PINS statement "
                << "(moduleTermMap) " << endl;
