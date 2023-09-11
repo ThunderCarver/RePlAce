@@ -223,7 +223,8 @@ void myNesterov::InitializationCommonVar() {
   if(dynamicStepCMD)
     max_iter = 6000;
   else
-    max_iter = 2500;
+    // max_iter = 2500;
+    max_iter = 1000;
 
   // debug : mgwoo
 //  max_iter = 3;
