@@ -1,7 +1,7 @@
 FROM centos:centos7 AS builder
 
 # install gcc 6
-RUN yum -y install centos-release-scl
+RUN yum -y install centos-release-scl tree
 #   yum -y install devtoolset-6 devtoolset-6-libatomic-devel
 ENV PATH=/usr/local/bin:$PATH
 # ENV CC=/opt/rh/devtoolset-6/root/usr/bin/gcc \
