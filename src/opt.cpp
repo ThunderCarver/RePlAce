@@ -238,7 +238,7 @@ void whitespace_init(void) {
     // there are shapes
     else {
       for(auto &curIdx : shapeMap[curTerminal->Name()]) {
-        for(int j = 0; j < place_st_cnt; j++) {
+        for(int j = 0; j < place_st_cnt; j++) {       //place_st_cnt = row_cnt
           PLACE *pl = &place_st[j];
 
           prec llx = shapeStor[curIdx].llx, lly = shapeStor[curIdx].lly,
@@ -280,16 +280,11 @@ void whitespace_init(void) {
     PrintError("Utilization Exceeds 100%. Please double-check your input DEF");
   }
 
-//  printf("INFO:  Total_PL_Area = %lf, %lf of chip\n", total_PL_area,
-//         total_PL_area / place.area * 100.0);
-//  printf("INFO:  Total_TermPL_Area = %ld, %lf of PL\n", total_termPL_area,
-//         1.0 * total_termPL_area / place.area * 100.0);
-//  printf("INFO:  Total_WS_Area = %ld, %lf of PL\n", total_WS_area,
-//         1.0 * total_WS_area / total_PL_area * 100.0);
-//  printf("INFO:  Total_Macro_Area = %lf, %lf of WS\n", total_macro_area,
-//         total_macro_area / total_WS_area * 100.0);
-//  printf("INFO:  Total_StdCell_Area = %lf, %lf of WS\n", total_std_area,
-//         total_std_area / total_WS_area * 100.0);
+ printf("INFO:  Total_PL_Area = %lf, %lf of chip\n", total_PL_area,total_PL_area / place.area * 100.0);
+ printf("INFO:  Total_TermPL_Area = %ld, %lf of chip\n", total_termPL_area,1.0 * total_termPL_area / place.area * 100.0);
+ printf("INFO:  Total_WS_Area = %ld, %lf of total_PLace_area\n", total_WS_area,1.0 * total_WS_area / total_PL_area * 100.0);
+ printf("INFO:  Total_Macro_Area = %lf, %lf of total_WhiteSpace_area\n", total_macro_area,total_macro_area / total_WS_area * 100.0);
+ printf("INFO:  Total_StdCell_Area = %lf, %lf of total_WhiteSpace_area\n", total_std_area,total_std_area / total_WS_area * 100.0);
 }
 
 void FillerCellRandPlace() {
@@ -373,8 +368,7 @@ void cell_filler_init() {
   gcell_cnt = moduleCNT + gfiller_cnt;
 
   // igkang:  replace realloc to mkl
-  gcell_st_tmp =
-      (struct CELL *)malloc(sizeof(struct CELL) * gcell_cnt);
+  gcell_st_tmp = (struct CELL *)malloc(sizeof(struct CELL) * gcell_cnt);
   memcpy(gcell_st_tmp, gcell_st, moduleCNT * (sizeof(struct CELL)));
   free(gcell_st);
 
@@ -476,8 +470,7 @@ void cell_init(void) {
   for(i = 0; i < netCNT; i++) {
     net = &netInstance[i];
     net->mod_idx = -1;
-    net->pin2 = (struct PIN **)malloc(
-        sizeof(struct PIN *) * net->pinCNTinObject);
+    net->pin2 = (struct PIN **)malloc(sizeof(struct PIN *) * net->pinCNTinObject);
     net->pinCNTinObject2 = net->pinCNTinObject;
     for(j = 0; j < net->pinCNTinObject2; j++) {
       net->pin2[j] = net->pin[j];
@@ -489,15 +482,13 @@ void cell_init(void) {
     cell = &gcell_st[i];
     cell->flg = mdp->flg;
     cell->idx = i;
-//    strcpy(cell->Name, mdp->name);
+    // strcpy(cell->Name, mdp->name);
     cellNameStor.push_back( mdp->Name() );
     cell->size = mdp->size;
     cell->half_size = mdp->half_size;
     cell->area = mdp->area;
-    cell->pof = (struct FPOS *)malloc(
-        sizeof(struct FPOS) * mdp->pinCNTinObject);
-    cell->pin = (struct PIN **)malloc(
-        sizeof(struct PIN *) * mdp->pinCNTinObject);
+    cell->pof = (struct FPOS *)malloc(sizeof(struct FPOS) * mdp->pinCNTinObject);
+    cell->pin = (struct PIN **)malloc(sizeof(struct PIN *) * mdp->pinCNTinObject);
     cell->pinCNTinObject = 0;
 
     // 
@@ -527,27 +518,18 @@ void cell_init(void) {
     }
 
     cell->netCNTinObject = cell->pinCNTinObject;
-    cell->pin_tmp = (struct PIN **)malloc(
-        sizeof(struct PIN *) * cell->pinCNTinObject);
-    cell->pof_tmp = (struct FPOS *)malloc(
-        sizeof(struct FPOS) * cell->pinCNTinObject);
-    memcpy(cell->pin_tmp, cell->pin,
-           cell->pinCNTinObject * (sizeof(struct PIN *)));
-    memcpy(cell->pof_tmp, cell->pof,
-           cell->pinCNTinObject * (sizeof(struct FPOS)));
+    cell->pin_tmp = (struct PIN **)malloc(sizeof(struct PIN *) * cell->pinCNTinObject);
+    cell->pof_tmp = (struct FPOS *)malloc(sizeof(struct FPOS) * cell->pinCNTinObject);
+    memcpy(cell->pin_tmp, cell->pin,cell->pinCNTinObject * (sizeof(struct PIN *)));
+    memcpy(cell->pof_tmp, cell->pof,cell->pinCNTinObject * (sizeof(struct FPOS)));
     free(cell->pin);
     free(cell->pof);
-    cell->pin = (struct PIN **)malloc(
-        sizeof(struct PIN *) * cell->pinCNTinObject);
-    cell->pof = (struct FPOS *)malloc(
-        sizeof(struct FPOS) * cell->pinCNTinObject);
-    memcpy(cell->pin, cell->pin_tmp,
-           cell->pinCNTinObject * (sizeof(struct PIN *)));
-    memcpy(cell->pof, cell->pof_tmp,
-           cell->pinCNTinObject * (sizeof(struct FPOS)));
+    cell->pin = (struct PIN **)malloc(sizeof(struct PIN *) * cell->pinCNTinObject);
+    cell->pof = (struct FPOS *)malloc(sizeof(struct FPOS) * cell->pinCNTinObject);
+    memcpy(cell->pin, cell->pin_tmp,cell->pinCNTinObject * (sizeof(struct PIN *)));
+    memcpy(cell->pof, cell->pof_tmp,cell->pinCNTinObject * (sizeof(struct FPOS)));
     free(cell->pin_tmp);
     free(cell->pof_tmp);
-
     cell->pmin = mdp->pmin;
     cell->pmax = mdp->pmax;
     cell->center = mdp->center;
