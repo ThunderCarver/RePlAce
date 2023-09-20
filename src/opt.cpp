@@ -93,10 +93,9 @@ void setup_before_opt(void) {
 
   total_cell_area = total_modu_area + total_filler_area;
 
-  //
   wlen_init();
   msh_init();
-  //    bin_init();
+  // bin_init();
 
   charge_fft_init(msh, bin_stp, 1);
 //  update_cell_den();

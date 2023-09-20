@@ -717,8 +717,7 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
 
   // not 1-to-1 mapping (into moduleInstnace), so traverse by index
   // cout << "Component name : component type" << endl;
-  for(size_t i = 0; i < __ckt.defComponentStor.size(); i++) {
-    curComp = &(__ckt.defComponentStor[i]);
+  for(size_t i = 0; i < __ckt.defComponentStor.size(); i++) {curComp = &(__ckt.defComponentStor[i]);
     // cout << curComp->id() << " : " << curComp->name() << endl;
 
     curModule = &moduleInstance[moduleCNT];
@@ -826,9 +825,7 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
 
   TERM* curTerm = NULL;
   terminalCNT = 0;
-  terminalInstance = (TERM*)malloc(
-      sizeof(TERM) * (blockageIdxStor.size() + fixedComponent.size() +
-                      __ckt.defPinStor.size()));
+  terminalInstance = (TERM*)malloc(sizeof(TERM) * (blockageIdxStor.size() + fixedComponent.size() + __ckt.defPinStor.size()));
 
   // for fixed cells.
   for(auto& curIdx : fixedComponent) {

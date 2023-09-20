@@ -161,16 +161,14 @@ void tier_delete_mGP2D(void) {
 
 // 1: MIXED  0: CellOnly
 void tier_assign(int mode) {  
-  struct MODULE **modu_st =
-      (struct MODULE **)malloc(sizeof(struct MODULE *) * moduleCNT);
+  struct MODULE **modu_st = (struct MODULE **)malloc(sizeof(struct MODULE *) * moduleCNT);
   struct TIER *tier = NULL;
 
   int currTier = 0;
   tier = &tier_st[currTier];
   tier->modu_cnt = 0;
   if(moduleCNT > 0)
-    tier->modu_st =
-      (struct MODULE **)malloc(sizeof(struct MODULE *) * moduleCNT);
+    tier->modu_st = (struct MODULE **)malloc(sizeof(struct MODULE *) * moduleCNT);
   else
     tier->modu_st = NULL;
   tier->modu_area = 0;
@@ -229,16 +227,14 @@ void tier_assign(int mode) {
     tier = &tier_st[i];
     if(mode == MIXED) {
       if(tier->modu_cnt > 0 && tier->modu_st)
-        tier->modu_st = (MODULE **)realloc(
-            tier->modu_st, sizeof(struct MODULE *) * (tier->modu_cnt));
+        tier->modu_st = (MODULE **)realloc(tier->modu_st, sizeof(struct MODULE *) * (tier->modu_cnt));
       else if(tier->modu_cnt == 0 && tier->modu_st) {
         free(tier->modu_st);
         tier->modu_st = NULL;
       }
     }
     else if(mode == STDCELLonly) {
-      tier->modu_st = (MODULE **)realloc(
-          tier->modu_st, sizeof(struct MODULE *) * (tier->modu_cnt));
+      tier->modu_st = (MODULE **)realloc(tier->modu_st, sizeof(struct MODULE *) * (tier->modu_cnt));
     }
     // tier->modu_den = tier->modu_area / tier->ws_area;
     prec moduleDensity = tier->modu_area / tier->ws_area;
