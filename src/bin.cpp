@@ -261,8 +261,7 @@ void bin_init_2D(int STAGE) {
 
     bool isUpdate = false;
     for(int i = 1; i <= 10; i++) {
-      if((2 << i) * (2 << i) <= ideal_bin_cnt &&
-         (2 << (i + 1)) * (2 << (i + 1)) > ideal_bin_cnt) {
+      if((2 << i) * (2 << i) <= ideal_bin_cnt && (2 << (i + 1)) * (2 << (i + 1)) > ideal_bin_cnt) {
         tier->dim_bin.x = tier->dim_bin.y = 2 << i;
         isUpdate = true;
         break;
