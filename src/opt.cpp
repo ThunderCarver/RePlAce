@@ -738,22 +738,18 @@ void init_iter(struct ITER *it, int idx) {
 void gp_opt(void) {
   myNesterov ns_opt;
 
-  // fillerCell random placement
-  FillerCellRandPlace();
-
-//  if( isRoutability ) {
-//    routeInst.Init();
-//    WriteBookshelf(); 
-//  }
+  FillerCellRandPlace();  // fillerCell random placement
+  // if( isRoutability ) {
+  //   routeInst.Init();
+  //   WriteBookshelf(); 
+  // }
 
   printf("PROC:  Start NESTEROV's Optimization\n");
   if(constraintDrivenCMD == false) {
     printf("PROC:    Global Lagrangian Multiplier is Applied\n");
   }
   else if(constraintDrivenCMD == true) {
-    printf(
-        "PROC:    Both Global and Local Lagrangian Multipliers are "
-        "Applied\n");
+    printf("PROC:    Both Global and Local Lagrangian Multipliers are Applied\n");
   }
     
   ns_opt.nesterov_opt();
