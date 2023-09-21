@@ -57,16 +57,15 @@ void tier_init_2D(int STAGE) {
   struct TIER *tier = NULL;
   struct MODULE *modu = NULL;
   struct CELL *cell = NULL;
-
+  // tier->cell_st initial
   for(int z = 0; z < numLayer; z++) {
     tier = &tier_st[z];
-    tier->cell_st = (struct CELL **)malloc(
-        sizeof(struct CELL *) * (tier->modu_cnt + gfiller_cnt));
+    tier->cell_st = (struct CELL **)malloc(sizeof(struct CELL *) * (tier->modu_cnt + gfiller_cnt));
     tier->cell_cnt = 0;
   }
 
   PrintInfoInt("TierInit: NumModules", tier->modu_cnt, 1);
-
+  // add moudule into tier->cell_st
   for(i = 0; i < moduleCNT; i++) {
     modu = &moduleInstance[i];
     if(STAGE == cGP2D) {
@@ -79,13 +78,11 @@ void tier_init_2D(int STAGE) {
     tier->cell_st[tier->cell_cnt] = cell;
     tier->cell_cnt++;
   }
-
+  // add filler into tier->cell_st
   for(int z = 0; z < numLayer; z++) {
     tier = &tier_st[z];
 
-    tier->filler_area =
-        (tier->area - tier->virt_area - tier->term_area) * target_cell_den -
-        tier->modu_area;
+    tier->filler_area = (tier->area - tier->virt_area - tier->term_area) * target_cell_den - tier->modu_area;
 
     // renewed calculation..!!
     //        tier->filler_area =
@@ -118,22 +115,18 @@ void tier_init_2D(int STAGE) {
 
     min_idx = max_idx;
   }
-
+  // memory control
   for(int z = 0; z < numLayer; z++) {
     tier = &tier_st[z];
     if(tier->cell_cnt == 0)
       free(tier->cell_st);
     else {
       // igkang:  replace realloc to mkl
-      tier->cell_st_tmp = (CELL **)malloc(
-          sizeof(struct CELL *) * (tier->modu_cnt + gfiller_cnt));
-      memcpy(tier->cell_st_tmp, tier->cell_st,
-             sizeof(struct CELL *) * (tier->modu_cnt + gfiller_cnt));
+      tier->cell_st_tmp = (CELL **)malloc(sizeof(struct CELL *) * (tier->modu_cnt + gfiller_cnt));
+      memcpy(tier->cell_st_tmp, tier->cell_st,sizeof(struct CELL *) * (tier->modu_cnt + gfiller_cnt));
       free(tier->cell_st);
-      tier->cell_st =
-          (CELL **)malloc(sizeof(struct CELL *) * tier->cell_cnt);
-      memcpy(tier->cell_st, tier->cell_st_tmp,
-             sizeof(struct CELL *) * tier->cell_cnt);
+      tier->cell_st = (CELL **)malloc(sizeof(struct CELL *) * tier->cell_cnt);
+      memcpy(tier->cell_st, tier->cell_st_tmp,sizeof(struct CELL *) * tier->cell_cnt);
       free(tier->cell_st_tmp);
       // tier->cell_st = (CELL**)realloc(tier->cell_st, sizeof(struct
       // CELL*)*tier->cell_cnt);
