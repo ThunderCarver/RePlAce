@@ -703,8 +703,7 @@ void SetSizeForObsMacro(int macroIdx, MODULE* curModule, int orient) {
 //
 // terminal_pmin & terminal_pmax must be updated...
 void GenerateModuleTerminal(Replace::Circuit& __ckt) {
-  moduleInstance =
-      (MODULE*)malloc(sizeof(MODULE) * __ckt.defComponentStor.size());
+  moduleInstance = (MODULE*)malloc(sizeof(MODULE) * __ckt.defComponentStor.size());
 
   // to fast traverse when building TerminalInstance
   vector< int > fixedComponent;
@@ -867,10 +866,7 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
    
     // Orient consideration
     // Note that unplaced cells is regarded as North orientation (default)
-    std::pair<float, float> macroSize = 
-      GetOrientSize(curMacro->sizeX(), curMacro->sizeY(), 
-          curComp->isUnplaced()? 
-          0 : curComp->placementOrient()); 
+    std::pair<float, float> macroSize = GetOrientSize(curMacro->sizeX(), curMacro->sizeY(), curComp->isUnplaced()? 0 : curComp->placementOrient()); 
 
     curTerm->size.Set(l2d * macroSize.first   / unitX,
                       l2d * macroSize.second  / unitY);
