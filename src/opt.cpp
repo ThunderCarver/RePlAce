@@ -265,8 +265,8 @@ void whitespace_init(void) {
 
   total_WS_area = total_PL_area - total_termPL_area;
   total_std_den = total_std_area / (total_WS_area - total_macro_area);
-//  printf("INFO:  Chip Area: %lf x %lf = %lf \n", place.cnt.x, place.cnt.y, place.area);
-//  fflush(stdout);
+  printf("INFO:  Chip Area: %lf x %lf = %lf \n", place.cnt.x, place.cnt.y, place.area);
+  fflush(stdout);
 
   PrintInfoPrec("TotalPlaceArea", total_PL_area);
   PrintInfoPrec("TotalFixedArea", total_termPL_area);
