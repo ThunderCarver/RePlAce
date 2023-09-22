@@ -452,15 +452,13 @@ void post_read_3d(void) {
   // Assume, height is equally distributed.
   //
   int place_hei = 0;
+  // initialize 0 ~ row_cnt-1 place_st
   for(int i = 0; i < row_cnt; i++) {
     ROW *row = &row_st[i];
     if(i == 0) {
       place_hei = row->size.y;
     }
-    else if(row->pmin.x != last_row->pmin.x ||
-            row->pmax.x != last_row->pmax.x ||
-
-            row->pmin.y != last_row->pmax.y) {
+    else if(row->pmin.x != last_row->pmin.x || row->pmax.x != last_row->pmax.x || row->pmin.y != last_row->pmax.y) {
       curPlace = &place_st[place_st_cnt++];
 
       curPlace->org.x = last_row->pmin.x;
@@ -487,7 +485,7 @@ void post_read_3d(void) {
     }
     last_row = row;
   }
-
+  // initialize last place_st based on final row
   curPlace = &place_st[place_st_cnt++];
 
   curPlace->org.x = last_row->pmin.x;
@@ -513,8 +511,7 @@ void post_read_3d(void) {
 
   // second re-malloc : upto place_st_cnt;
   place_st = (PLACE *)realloc(place_st, sizeof(struct PLACE) * place_st_cnt);
-  place_backup_st =
-      (PLACE *)realloc(place_backup_st, sizeof(struct PLACE) * place_st_cnt);
+  place_backup_st = (PLACE *)realloc(place_backup_st, sizeof(struct PLACE) * place_st_cnt);
 
   for(int i = 0; i < place_st_cnt; i++) {
     place_backup_st[i] = place_st[i];
