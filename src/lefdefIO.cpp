@@ -752,8 +752,7 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
       exit(1);
     }
 
-    if(strcmp(curMacro->macroClass(), "BLOCK") == 0 &&
-       __ckt.lefObsStor[macroPtr->second].size() != 0) {
+    if(strcmp(curMacro->macroClass(), "BLOCK") == 0 && __ckt.lefObsStor[macroPtr->second].size() != 0) {
       // cout << "BLOCK/OBS: " << curMacro->name() << endl;
 
       // Orient handling for MS-Placement
@@ -1016,10 +1015,8 @@ void GenerateDummyCell(Replace::Circuit& __ckt) {
     exit(1);
   }
   // Set Site Size
-  float siteSizeX_ =
-       l2d * __ckt.lefSiteStor[sitePtr->second].sizeX() / unitX;
-  float siteSizeY_ =
-       l2d * __ckt.lefSiteStor[sitePtr->second].sizeY() / unitY;
+  float siteSizeX_ = l2d * __ckt.lefSiteStor[sitePtr->second].sizeX() / unitX;
+  float siteSizeY_ = l2d * __ckt.lefSiteStor[sitePtr->second].sizeY() / unitY;
 
   // cout << "siteSize: " << siteSizeX_ << " " << siteSizeY_ << endl;
 
@@ -1293,11 +1290,8 @@ void GenerateRow(Replace::Circuit& __ckt) {
     new(curRow) ROW();
 
     curRow->pmin.Set((row.x() + offsetX) / unitX, (row.y() + offsetY) / unitY);
-    curRow->size.Set(
-        l2d * __ckt.lefSiteStor[sitePtr->second].sizeX() / unitX *
-            row.xNum(),
-        l2d * __ckt.lefSiteStor[sitePtr->second].sizeY() / unitY *
-            row.yNum());
+    curRow->size.Set(l2d * __ckt.lefSiteStor[sitePtr->second].sizeX() / unitX * row.xNum(), 
+                      l2d * __ckt.lefSiteStor[sitePtr->second].sizeY() / unitY * row.yNum());
 
     curRow->pmax.Set(curRow->pmin.x + curRow->size.x,
                      curRow->pmin.y + curRow->size.y);
@@ -1306,27 +1300,24 @@ void GenerateRow(Replace::Circuit& __ckt) {
       grow_pmin.Set(curRow->pmin);
       grow_pmax.Set(curRow->pmax);
 
-      rowHeight =
-          l2d * __ckt.lefSiteStor[sitePtr->second].sizeY() / unitY;
+      rowHeight = l2d * __ckt.lefSiteStor[sitePtr->second].sizeY() / unitY;
 
-//      if(INT_CONVERT(l2d * __ckt.lefSiteStor[sitePtr->second].sizeY()) %
-//             INT_CONVERT(unitY) !=
-//         0) {
-//        int _rowHeight =
-//            INT_CONVERT(l2d * __ckt.lefSiteStor[sitePtr->second].sizeY());
-//        cout << endl
-//             << "** ERROR: rowHeight \% unitY is not zero,  " << endl
-//             << "          ( rowHeight : " << _rowHeight
-//             << ", unitY : " << INT_CONVERT(unitY)
-//             << ", rowHeight \% unitY : " << _rowHeight % INT_CONVERT(unitY)
-//             << " )" << endl;
-//        cout << "          so it causes serious problem in RePlACE" << endl
-//             << endl;
-//        cout << "          Use custom unitY in here using -unitY command, as a "
-//                "divider of rowHeight"
-//             << endl;
-//        exit(1);
-//      }
+    //  if(INT_CONVERT(l2d * __ckt.lefSiteStor[sitePtr->second].sizeY()) % INT_CONVERT(unitY) != 0) {
+    //    int _rowHeight =
+    //        INT_CONVERT(l2d * __ckt.lefSiteStor[sitePtr->second].sizeY());
+    //    cout << endl
+    //         << "** ERROR: rowHeight \% unitY is not zero,  " << endl
+    //         << "          ( rowHeight : " << _rowHeight
+    //         << ", unitY : " << INT_CONVERT(unitY)
+    //         << ", rowHeight \% unitY : " << _rowHeight % INT_CONVERT(unitY)
+    //         << " )" << endl;
+    //    cout << "          so it causes serious problem in RePlACE" << endl
+    //         << endl;
+    //    cout << "          Use custom unitY in here using -unitY command, as a "
+    //            "divider of rowHeight"
+    //         << endl;
+    //    exit(1);
+    //  }
       isFirst = false;
     }
     else {
