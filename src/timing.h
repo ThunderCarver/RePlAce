@@ -213,8 +213,10 @@ class Timing {
   void SetLefDefEnv();
 
   void WriteSpef(const std::string& spefFile);
+  // void ExecuteStaFirst(std::string topCellName, std::string verilogName,
+  //                      vector< std::string >& libName, std::string sdcName);
   void ExecuteStaFirst(std::string topCellName, std::string verilogName,
-                       vector< std::string >& libName, std::string sdcName);
+                        vector< std::string >& libName, std::string sdcName, int criticalPathsNum);
   void ExecuteStaLater();
 };
 

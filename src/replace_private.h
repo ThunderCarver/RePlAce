@@ -528,7 +528,7 @@ extern bool netWeightApply;
 
 extern prec capPerMicron;
 extern prec resPerMicron;
-
+extern int criticalPathsNum;
 extern bool isClockGiven;
 extern prec timingClock;
 extern std::string clockPinName;

@@ -73,6 +73,7 @@ public:
   float get_hpwl();
   float get_wns();
   float get_tns(); 
+  void set_critical_paths(int number);
 
   size_t get_module_size();
   size_t get_terminal_size();
@@ -100,6 +101,7 @@ private:
   bool timing_driven_mode;
   bool routability_driven_mode;
   bool write_bookshelf_mode;
+  int critical_paths_number;
   double unit_r;
   double unit_c;
 };

@@ -84,7 +84,7 @@ bool netWeightApply;
 
 prec capPerMicron;
 prec resPerMicron;
-
+int criticalPathsNum;
 bool isClockGiven;
 prec timingClock;
 string clockPinName;

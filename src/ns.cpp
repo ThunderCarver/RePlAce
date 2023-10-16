@@ -71,102 +71,103 @@ void myNesterov::nesterov_opt() {
 
   if(isTiming) {
     TimingInst.BuildSteiner(true);
-    TimingInst.ExecuteStaFirst(verilogTopModule, verilogName, libStor, sdcName );
+    // TimingInst.ExecuteStaFirst(verilogTopModule, verilogName, libStor, sdcName );
+    TimingInst.ExecuteStaFirst(verilogTopModule, verilogName, libStor, sdcName, criticalPathsNum);
   }
 
-  InitializationCommonVar();
+  // InitializationCommonVar();
 
-  InitializationCellStatus();
+  // InitializationCellStatus();
 
-  // if (stnCMD == true)     FLUTE_init();
+  // // if (stnCMD == true)     FLUTE_init();
 
-  // x_st and y_st are exactly same, 
-  // but why do we need to re-do this??
-  // pre-calculates for WL forces
-  net_update(y_st);
+  // // x_st and y_st are exactly same, 
+  // // but why do we need to re-do this??
+  // // pre-calculates for WL forces
+  // net_update(y_st);
 
-  // pre-calculates Density forces.
-  bin_update();
+  // // pre-calculates Density forces.
+  // bin_update();
 
-  // fill in y_wdst, y_pdst , and y_pdstl if needed
-  InitializationCostFunctionGradient(&sum_wgrad, &sum_pgrad);
+  // // fill in y_wdst, y_pdst , and y_pdstl if needed
+  // InitializationCostFunctionGradient(&sum_wgrad, &sum_pgrad);
 
-  InitializationCoefficients();
+  // InitializationCoefficients();
 
-  // density only preconditioner. not recommended.
-  if(DEN_ONLY_PRECON) {
-    InitializationPrecondition_DEN_ONLY_PRECON();
-  }
-  // normal preconditioner.
-  else {
-    InitializationPrecondition();
-  }
+  // // density only preconditioner. not recommended.
+  // if(DEN_ONLY_PRECON) {
+  //   InitializationPrecondition_DEN_ONLY_PRECON();
+  // }
+  // // normal preconditioner.
+  // else {
+  //   InitializationPrecondition();
+  // }
 
-  InitializationIter();
+  // InitializationIter();
 
-  z_init();
+  // z_init();
 
-  if(dynamicStepCMD && isTrial == false && isFirst_gp_opt == true) {
-    UPPER_PCOF = 1.0001;
-    potnPhaseDS = potnPhase1;
-  }
+  // if(dynamicStepCMD && isTrial == false && isFirst_gp_opt == true) {
+  //   UPPER_PCOF = 1.0001;
+  //   potnPhaseDS = potnPhase1;
+  // }
 
-  if(isTrial == true)
-    UPPER_PCOF = 1.05;
-  net_update(z_st);
-  bin_update();  // igkang
+  // if(isTrial == true)
+  //   UPPER_PCOF = 1.05;
+  // net_update(z_st);
+  // bin_update();  // igkang
 
-  // if (stnCMD == true) {
-  //    buildRSMT_FLUTE(z_st);
-  //    it->tot_stnwl= total_stnwl.x + total_stnwl.y;
-  //}
-  it->tot_wwl = (1.0 - opt_w_cof) * it->tot_hpwl + opt_w_cof * it->tot_stnwl;
+  // // if (stnCMD == true) {
+  // //    buildRSMT_FLUTE(z_st);
+  // //    it->tot_stnwl= total_stnwl.x + total_stnwl.y;
+  // //}
+  // it->tot_wwl = (1.0 - opt_w_cof) * it->tot_hpwl + opt_w_cof * it->tot_stnwl;
 
-  getCostFuncGradient2(z_dst, z_wdst, z_pdst, z_pdstl, N, cellLambdaArr);
+  // getCostFuncGradient2(z_dst, z_wdst, z_pdst, z_pdstl, N, cellLambdaArr);
 
-  a = 1.0;
-  get_lc(y_st, y_dst, z_st, z_dst, &it0, N);
+  // a = 1.0;
+  // get_lc(y_st, y_dst, z_st, z_dst, &it0, N);
 
-  it->alpha00 = it0.alpha00;
+  // it->alpha00 = it0.alpha00;
 
-  if(isTrial) {
-    initialOVFL = it->ovfl;
+  // if(isTrial) {
+  //   initialOVFL = it->ovfl;
 
-    prec tot_hpwl(it->tot_hpwl);
-    trial_HPWLs.push_back(make_pair(tot_hpwl, 0.0));
-    trial_POTNs.push_back(it->potn);
-  }
+  //   prec tot_hpwl(it->tot_hpwl);
+  //   trial_HPWLs.push_back(make_pair(tot_hpwl, 0.0));
+  //   trial_POTNs.push_back(it->potn);
+  // }
 
-  PrintNesterovOptStatus(0);
+  // PrintNesterovOptStatus(0);
 
-  // if (dynamicStepCMD) NUM_ITER_FILLER_PLACE = 20;
-  // else                NUM_ITER_FILLER_PLACE = 20;
+  // // if (dynamicStepCMD) NUM_ITER_FILLER_PLACE = 20;
+  // // else                NUM_ITER_FILLER_PLACE = 20;
 
-  last_iter = DoNesterovOptimization(TimingInst);
+  // last_iter = DoNesterovOptimization(TimingInst);
 
-  SummarizeNesterovOpt(last_iter);
+  // SummarizeNesterovOpt(last_iter);
 
-  // LW 06/01/17  Block the last evaluation.
-  // if (isRoutability == true) {
-  //    cell_update (x_st, N_org);
-  //    modu_copy ();
-  //    congEstimation (x_st);
-  //    calcCong_print_detail();
-  //}
+  // // LW 06/01/17  Block the last evaluation.
+  // // if (isRoutability == true) {
+  // //    cell_update (x_st, N_org);
+  // //    modu_copy ();
+  // //    congEstimation (x_st);
+  // //    calcCong_print_detail();
+  // //}
 
-  if(isTiming) {
-    TimingInst.BuildSteiner(true);
-    // TimingInst.PrintNetSteiner();
+  // if(isTiming) {
+  //   TimingInst.BuildSteiner(true);
+  //   // TimingInst.PrintNetSteiner();
 
-    string spefName = string(dir_bnd) + "/" + gbch + "_gp.spef";
-    // TimingInst.WriteSpef(spefName);
-    TimingInst.ExecuteStaLater();
-  }
-  else {
-    // for comparison
-    //        TimingInst.ExecuteStaFirst(gbch, verilogCMD, libStor, sdcCMD);
-  }
-  malloc_free();
+  //   string spefName = string(dir_bnd) + "/" + gbch + "_gp.spef";
+  //   // TimingInst.WriteSpef(spefName);
+  //   TimingInst.ExecuteStaLater();
+  // }
+  // else {
+  //   // for comparison
+  //   //        TimingInst.ExecuteStaFirst(gbch, verilogCMD, libStor, sdcCMD);
+  // }
+  // malloc_free();
 }
 
 

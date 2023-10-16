@@ -345,6 +345,7 @@ replace_external::init_replace() {
     sdcName = sdc_file;
     verilogName = verilog_stor[0];
     isTiming = true; 
+    criticalPathsNum = critical_paths_number;
   }
 
   initGlobalVarsAfterParse();
@@ -505,4 +506,10 @@ void
 replace_external::import_custom_net_weights(const char* input_file) {
   hasCustomNetWeight = true;
   net_weight_file = input_file;
+}
+
+
+void
+replace_external::set_critical_paths(int number){
+  critical_paths_number = number;
 }

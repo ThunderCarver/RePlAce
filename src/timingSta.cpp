@@ -161,7 +161,7 @@ void TimingPathPrint(sta::Sta* sta, sta::PathEnd* end) {
 }
 
 void Timing::ExecuteStaFirst(string topCellName, string verilogName,
-                             vector< string >& libStor, string sdcName) {
+                             vector< string >& libStor, string sdcName, int criticalPathsNum) {
   cout << "Execute STA" << endl;
   cout << "topCellName: " << topCellName << endl;
   cout << "verilog    : " << verilogName << endl;
@@ -270,6 +270,8 @@ void Timing::ExecuteStaFirst(string topCellName, string verilogName,
   UpdateTimingSta();
 
   UpdateNetWeightSta();
+
+  Tcl_Eval(_interp, string("sta::report_checks -group_count " + std::to_string(criticalPathsNum)).c_str());
 
   // WNS / TNS report
   const MinMax* cnst_min_max;
