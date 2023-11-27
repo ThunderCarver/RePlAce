@@ -365,8 +365,7 @@ void SetParameter() {
 
     // Note that OffsetX should follow siteSizeY, because unitX = unitY
     // and unitY comes from siteSizeY
-    SetOffsetX( (rowMin % siteSizeY == 0)? 
-              0 : siteSizeY - (rowMin % siteSizeY) );
+    SetOffsetX( (rowMin % siteSizeY == 0)? 0 : siteSizeY - (rowMin % siteSizeY) );
   }
 
   if(IsPrecEqual(offsetY, PREC_MAX)) { 
@@ -375,8 +374,7 @@ void SetParameter() {
       rowMin = (rowMin > curRow.y()) ? curRow.y() : rowMin;
     }
    
-    SetOffsetY( (rowMin % siteSizeY == 0)? 
-              0 : siteSizeY - (rowMin % siteSizeY) );
+    SetOffsetY( (rowMin % siteSizeY == 0)? 0 : siteSizeY - (rowMin % siteSizeY) );
   }
 
 
@@ -716,7 +714,8 @@ void GenerateModuleTerminal(Replace::Circuit& __ckt) {
 
   // not 1-to-1 mapping (into moduleInstnace), so traverse by index
   // cout << "Component name : component type" << endl;
-  for(size_t i = 0; i < __ckt.defComponentStor.size(); i++) {curComp = &(__ckt.defComponentStor[i]);
+  for(size_t i = 0; i < __ckt.defComponentStor.size(); i++) {
+    curComp = &(__ckt.defComponentStor[i]);
     // cout << curComp->id() << " : " << curComp->name() << endl;
 
     curModule = &moduleInstance[moduleCNT];

@@ -388,8 +388,7 @@ replace_external::place_cell_nesterov_place() {
   }
   update_instance_list();
   if( isPlot ) {
-    SaveCellPlotAsJPEG("Global Placement Result", false,
-        string(dir_bnd) + string("/globalPlace"));
+    SaveCellPlotAsJPEG("Global Placement Result", false, string(dir_bnd) + string("/globalPlace"));
   }
   return true;
 }

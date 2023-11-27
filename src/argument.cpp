@@ -136,8 +136,7 @@ void initGlobalVars() {
   globalRouterSetPosition = "../router/ICCAD12.NCTUgr.set";
   globalRouterCapRatio = 1.0;
 
-  conges_eval_methodCMD =
-      global_router_based;  // int (enum: defined in replace_private.h)
+  conges_eval_methodCMD = global_router_based;  // int (enum: defined in replace_private.h)
   onlyLG_CMD = (isRoutability) ? true : false;
 
   overflowMin = PREC_MAX;
@@ -145,16 +144,12 @@ void initGlobalVars() {
 
 void initGlobalVarsAfterParse() {
   // density & overflowMin settings
-  target_cell_den = 
-    (target_cell_den == PREC_MAX)? ((isRoutability) ? 0.9 : 1.0 ) : target_cell_den;
+  target_cell_den = (target_cell_den == PREC_MAX)? ((isRoutability) ? 0.9 : 1.0 ) : target_cell_den;
   target_cell_den_orig = target_cell_den;
 
-  overflowMin = (overflowMin == PREC_MAX)? 
-                       ((isRoutability) ? 0.17 : 0.1)
-                       : overflowMin;
+  overflowMin = (overflowMin == PREC_MAX)? ((isRoutability) ? 0.17 : 0.1) : overflowMin;
   
-  INIT_LAMBDA_COF_GP = (INIT_LAMBDA_COF_GP == PREC_MIN)? 
-    ((isRoutability)? 0.001 : 0.00008) : INIT_LAMBDA_COF_GP ;
+  INIT_LAMBDA_COF_GP = (INIT_LAMBDA_COF_GP == PREC_MIN)? ((isRoutability)? 0.001 : 0.00008) : INIT_LAMBDA_COF_GP ;
 
   numInitPlaceIter = (isRoutability)? 1 : 30;
 

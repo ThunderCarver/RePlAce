@@ -684,21 +684,11 @@ int main(int argc, char *argv[]) {
 
 // mgwoo
 void init() {
-  char str_lg[BUF_SZ] = {
-      0,
-  };
-  char str_dp[BUF_SZ] = {
-      0,
-  };
-  char str_dp2[BUF_SZ] = {
-      0,
-  };
-  char str_dp3[BUF_SZ] = {
-      0,
-  };
-  char result_file[BUF_SZ] = {
-      0,
-  };
+  char str_lg[BUF_SZ] = {0,};
+  char str_dp[BUF_SZ] = {0,};
+  char str_dp2[BUF_SZ] = {0,};
+  char str_dp3[BUF_SZ] = {0,};
+  char result_file[BUF_SZ] = {0,};
   int ver_num = 0;
 
   inv_RAND_MAX = (prec)1.0 / RAND_MAX;
@@ -781,12 +771,8 @@ void init() {
   //
   // extract benchName ~~~~/XXXX.aux
   //                        <------>
-  benchName =
-      (slashPos == -1)
-          ? fileCMD
-          : fileCMD.substr(slashPos + 1, fileCMD.length() - slashPos - 1);
-  sprintf(gbch_dir, "%s",
-          (slashPos == -1) ? currentDir : fileCMD.substr(0, slashPos).c_str());
+  benchName = (slashPos == -1)? fileCMD: fileCMD.substr(slashPos + 1, fileCMD.length() - slashPos - 1);
+  sprintf(gbch_dir, "%s", (slashPos == -1) ? currentDir : fileCMD.substr(0, slashPos).c_str());
 
   // if benchName has [.aux] extension
   // remove [.aux]
@@ -796,8 +782,7 @@ void init() {
   }
 
   sprintf(gbch, "%s", benchName.c_str());
-  sprintf(output_dir, "%s/%s/%s", outputCMD.c_str(), bmFlagCMD.c_str(),
-          benchName.c_str());
+  sprintf(output_dir, "%s/%s/%s", outputCMD.c_str(), bmFlagCMD.c_str(), benchName.c_str());
 
   // generate folder if output folders not exist.
   struct stat fileStat;
