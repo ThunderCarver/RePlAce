@@ -279,11 +279,11 @@ void whitespace_init(void) {
     PrintError("Utilization Exceeds 100%. Please double-check your input DEF");
   }
 
- printf("INFO:  Total_PL_Area = %lf, %lf of chip\n", total_PL_area,total_PL_area / place.area * 100.0);
- printf("INFO:  Total_TermPL_Area = %ld, %lf of chip\n", total_termPL_area,1.0 * total_termPL_area / place.area * 100.0);
- printf("INFO:  Total_WS_Area = %ld, %lf of total_PLace_area\n", total_WS_area,1.0 * total_WS_area / total_PL_area * 100.0);
- printf("INFO:  Total_Macro_Area = %lf, %lf of total_WhiteSpace_area\n", total_macro_area,total_macro_area / total_WS_area * 100.0);
- printf("INFO:  Total_StdCell_Area = %lf, %lf of total_WhiteSpace_area\n", total_std_area,total_std_area / total_WS_area * 100.0);
+  printf("INFO:  Total_PL_Area = %lf, %lf of chip\n", total_PL_area, (total_PL_area / place.area * 100.0));
+  printf("INFO:  Total_TermPL_Area = %ld, %lf of chip\n", total_termPL_area, (total_termPL_area / place.area * 100.0));
+  printf("INFO:  Total_WS_Area = %ld, %lf of total_PLace_area\n", total_WS_area, (total_WS_area / total_PL_area * 100.0));
+  printf("INFO:  Total_Macro_Area = %lf, %lf of total_WhiteSpace_area\n", total_macro_area, (total_macro_area / total_WS_area * 100.0));
+  printf("INFO:  Total_StdCell_Area = %lf, %lf of total_WhiteSpace_area\n", total_std_area, (total_std_area / total_WS_area * 100.0));
 }
 
 void FillerCellRandPlace() {
