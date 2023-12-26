@@ -522,7 +522,7 @@ void post_read_3d(void) {
 
   // global variable 'place' update
   place.stp.x = SITE_SPA;
-  place.stp.y = 1.0;  // rowHeight....................????
+  place.stp.y = rowHeight; // 1.0....................????; 这个数是多少无意义
 
   place.org = place_st[0].org;
   place.end = place_st[0].end;
