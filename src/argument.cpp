@@ -113,7 +113,7 @@ void initGlobalVars() {
   detailPlacerLocation = "";
   isOnlyLGinDP = (isRoutability) ? true : false;
 
-  numThread = 1;  // default
+  numThread = 64;  // default
   hasUnitNetWeight = false;
   hasCustomNetWeight = false;
   netWeight = 1.00;
