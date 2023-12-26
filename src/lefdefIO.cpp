@@ -1385,7 +1385,7 @@ void GenerateFullRow(Replace::Circuit& __ckt) {
 
   // get the lowest one
   for(auto curRow : __ckt.defRowStor) {
-    if(minRow->y() < curRow->y()) {
+    if(minRow->y() < curRow.y()) {
       minRow = &curRow;
     }
   }
