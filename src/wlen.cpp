@@ -928,7 +928,7 @@ void net_update_wa(FPOS *st) {
 
         //            cout << j << " " << pin << endl;
 
-        if(!pin->term) {
+        if(!pin->term) {  //pin->term -> 1, move -> 0
           MODULE *curModule = &moduleInstance[pin->moduleID];
           FPOS pof = curModule->pof[pin->pinIDinModule];
           FPOS center = st[pin->moduleID];

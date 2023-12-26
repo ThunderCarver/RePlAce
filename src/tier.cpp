@@ -194,13 +194,13 @@ void tier_assign(int mode) {
     else if(mode == STDCELLonly) {
       moduleArea = modu->size.GetProduct();
     }
-//     cout << modu->name << endl;
-//     modu->size.Dump("Module Size");
+    // cout << modu->name << endl;
+    // modu->size.Dump("Module Size");
 
-//     cout << "tier's modu_area: " << tier->modu_area << endl;
-//     cout << "modu_area: " << modu_area << endl;
-//     cout << "tier's ws_area: " << tier->ws_area << endl;
-//     cout << "target_cell_den: " << target_cell_den << endl;
+    // cout << "tier's modu_area: " << tier->modu_area << endl;
+    // cout << "modu_area: " << modu_area << endl;
+    // cout << "tier's ws_area: " << tier->ws_area << endl;
+    // cout << "target_cell_den: " << target_cell_den << endl;
 
     if((tier->modu_area + moduleArea) / tier->ws_area > target_cell_den) {
       cout << "** Warning: Exceed the placement Area" << endl;
@@ -234,8 +234,8 @@ void tier_assign(int mode) {
 
     PrintInfoPrec("TierInit: TierUtil", moduleDensity, 1);
   }
-//  cout << "Final module count: " << tier->modu_cnt << endl;
-//  exit(1);
+  // cout << "Final module count: " << tier->modu_cnt << endl;
+  // exit(1);
   free(modu_st);
 }
 

@@ -253,6 +253,7 @@ void bin_init_2D(int STAGE) {
     dim_bin_mGP2D.x = dim_bin_mGP2D.y = 0;
   }
 
+  // initial dim_bin at every tier
   for(int z = 0; z < numLayer; z++) {
     TIER *tier = &tier_st[z];
     prec avg_modu_area = 1.0 * tier->modu_area / tier->modu_cnt;
@@ -296,6 +297,7 @@ void bin_init_2D(int STAGE) {
     }
   }
 
+  // compute bin size
   if(STAGE == mGP2D) {
     // LW 05/30/17
     // IK 05/08/17
@@ -326,6 +328,7 @@ void bin_init_2D(int STAGE) {
            dim_bin_cGP2D.y);
   }
 
+  // initalize bin matrix
   bin_mat_st = (BIN **)malloc(sizeof(BIN *) * numLayer);
   for(int z = 0; z < numLayer; z++) {
     TIER *tier = &tier_st[z];
