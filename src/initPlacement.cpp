@@ -188,7 +188,7 @@ void build_data_struct(bool initCoordi) {
   }
 
   term_pmin.x = PREC_MAX;
-  term_pmin.x = PREC_MAX;
+  term_pmin.y = PREC_MAX;
   term_pmax.x = 0;
   term_pmax.y = 0;
 
